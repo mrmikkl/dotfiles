@@ -3,23 +3,29 @@
 ##########################################
 alias reload_zsh='source ~/.zshrc'
 alias edit_zsh='vi ~/.zshrc'
+alias edit_p10k='vi ~/.p10k.zsh' # allows modifications of Powerlevel10k theme
+alias edit_zsh_config='vi ~/.dotfiles/.zsh_config'
 alias edit_app_cmd='vi ~/.dotfiles/.app_commands'
 alias edit_basic_cmd='vi ~/.dotfiles/.basic_commands'
 alias edit_exports='vi ~/.dotfiles/.exports'
 alias edit_project_cmd='vi ~/.dotfiles/.project_commands'
 
-alias ll='ls -laG'
+#Find alias origin
+alias find_alias='zsh -ixc : 2>&1 | grep "$1"'
+alias find_alias_bash='bash -ixlc : 2>&1 | grep "$1"'
+
+alias lc='colorls -lA --gs --sd'
+alias lch='colorls -l --gs --sd'
+alias lt2='colorls --tree=2'
+alias lt3='colorls --tree=3'
 alias mv='mv -i'
 alias cp='cp -i'
 alias rmy='rm'
 alias rm='rm -i'
-alias lx='ll -BX' # sort by extension
-alias lz='ll -rS' # sort by size
-alias lt='ll -rt' # sort by date
 alias grep='grep --color=auto'
 alias vi='vim'
-alias tu='top -o cpu' #cpu
-alias tm='top -o vsize' #memory
+alias top_cpu='top -o cpu' #cpu
+alias top_mem='top -o vsize' #memory
 alias disk_usage='du -h . | grep "^[0-9\.]\+G"'
 alias -- --="cd -"
 
@@ -32,7 +38,6 @@ alias tree="find . -type d | sed -e 1d -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e '
 
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
-alias ..='cd ..'
 alias h='history | grep $1'
 alias openports='netstat --all --numeric --programs --inet --inet6'
 alias pss='ps -efA | grep $1'
@@ -57,7 +62,7 @@ alias cdserver='cd ~/applicationServer'
 alias cddown='cd ~/Downloads'
 
 ##########################################
-# Useful functions
+# Find functions
 ##########################################
 
 # Find modification
@@ -75,22 +80,16 @@ function ft() {
    grep -ris "$1" $2 
 }
 
+##########################################
+# Useful functions
+##########################################
+
 # Print IP from local interfaces
 function ip() {
     echo -e "Ethernet:\t `ipconfig getifaddr en0 2> /dev/null`"
     echo -e "WiFi:\t\t `ipconfig getifaddr en1 2> /dev/null`"
     echo -e "External:\t `curl -s http://checkip.dyndns.org/ | grep -o '[0-9][0-9]*.[0-9][0-9]*.[0-9][0-9]*.[0-9]*'`"
     echo ""
-}
-
-# Print working directory after a cd.
-cd() {
-if [[ $@ == '-' ]]; then
-builtin cd "$@" > /dev/null  # We're going to display the new working directory ourselves.
-else
-builtin cd "$@"
-fi
-echo -e "   \033[1;30m"`pwd`"\033[0m"
 }
 
 # Change to active Finder directory
